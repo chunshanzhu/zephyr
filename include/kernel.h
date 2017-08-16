@@ -461,6 +461,18 @@ extern k_tid_t k_thread_create(struct k_thread *new_thread,
 extern void k_sleep(s32_t duration);
 
 /**
+ * @brief Put the current thread to sleep.
+ *
+ * This routine puts the current thread to sleep for @a duration
+ * microseconds.
+ *
+ * @param duration Number of microseconds to sleep.
+ *
+ * @return N/A
+ */
+extern void k_sleep_us(s32_t duration);
+
+/**
  * @brief Cause the current thread to busy wait.
  *
  * This routine causes the current thread to execute a "do nothing" loop for
@@ -922,6 +934,7 @@ extern void *k_thread_custom_data_get(void);
 	(sys_clock_ticks_per_sec == 1)
 
 	#define _ms_per_tick (MSEC_PER_SEC / sys_clock_ticks_per_sec)
+	#define _us_per_tick (USEC_PER_SEC / sys_clock_ticks_per_sec)
 #else
 	/* yields horrible 64-bit math on many architectures: try to avoid */
 	#define _NON_OPTIMIZED_TICKS_PER_SEC
@@ -929,10 +942,17 @@ extern void *k_thread_custom_data_get(void);
 
 #ifdef _NON_OPTIMIZED_TICKS_PER_SEC
 extern s32_t _ms_to_ticks(s32_t ms);
+
+extern s32_t _us_to_ticks(s32_t us);
 #else
 static ALWAYS_INLINE s32_t _ms_to_ticks(s32_t ms)
 {
 	return (s32_t)ceiling_fraction((u32_t)ms, _ms_per_tick);
+}
+
+static ALWAYS_INLINE s32_t _us_to_ticks(s32_t us)
+{
+        return (s32_t)ceiling_fraction((u32_t)us, _us_per_tick);
 }
 #endif
 

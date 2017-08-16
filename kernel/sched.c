@@ -182,6 +182,17 @@ s32_t _ms_to_ticks(s32_t ms)
 }
 #endif
 
+/* convert microseconds to ticks */
+
+#ifdef _NON_OPTIMIZED_TICKS_PER_SEC
+s32_t _us_to_ticks(s32_t us)
+{
+        s64_t us_ticks_per_sec = (s64_t)us * sys_clock_ticks_per_sec;
+
+        return (s32_t)ceiling_fraction(us_ticks_per_sec, USEC_PER_SEC);
+}
+#endif
+
 /* pend the specified thread: it must *not* be in the ready queue */
 /* must be called with interrupts locked */
 void _pend_thread(struct k_thread *thread, _wait_q_t *wait_q, s32_t timeout)
@@ -349,6 +360,36 @@ void k_sleep(s32_t duration)
 	_add_thread_timeout(_current, NULL, ticks);
 
 	_Swap(key);
+#endif
+}
+
+void k_sleep_us(s32_t duration)
+{
+#ifdef CONFIG_MULTITHREADING
+        /* volatile to guarantee that irq_lock() is executed after ticks is
+         * populated
+         */
+        volatile s32_t ticks;
+        unsigned int key;
+
+        __ASSERT(!_is_in_isr(), "");
+        __ASSERT(duration != K_FOREVER, "");
+
+        K_DEBUG("thread %p for %d ns\n", _current, duration);
+
+        /* wait of 0 ms is treated as a 'yield' */
+        if (duration == 0) {
+                k_yield();
+                return;
+        }
+
+        ticks = _TICK_ALIGN + _us_to_ticks(duration);
+        key = irq_lock();
+
+        _remove_thread_from_ready_q(_current);
+        _add_thread_timeout(_current, NULL, ticks);
+
+        _Swap(key);
 #endif
 }
 
