@@ -9,5 +9,9 @@
 
 void main(void)
 {
-	printk("Hello World! %s\n", CONFIG_ARCH);
+	while(1)
+	{
+		printk("Hello World! %s\n", CONFIG_ARCH);
+		k_sleep(100);
+	}
 }
