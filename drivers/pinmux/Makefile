@@ -30,6 +30,6 @@ obj-$(CONFIG_PINMUX_QMSI) += pinmux_qmsi.o
 obj-$(CONFIG_PINMUX_FE310) += pinmux_fe310.o
 obj-$(CONFIG_PINMUX_CC2650) += pinmux_cc2650.o
 obj-$(CONFIG_PINMUX_ESP32) += pinmux_esp32.o
-
+obj-$(CONFIG_STM32F1X_FSMC_LCD) +=stm32/pinmux_stm32f1_fsmc_lcd.o
 # "runtime" pinmux
 obj-$(CONFIG_PINMUX_DEV) += dev/
