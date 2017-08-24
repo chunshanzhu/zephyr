@@ -9,5 +9,11 @@
 
 void main(void)
 {
-	printk("Hello World! %s\n", CONFIG_ARCH);
+	u32_t count = 0;
+	while(1)
+	{
+		count += 1;
+		printk("Hello World! %s %s board the %dth print\n", CONFIG_ARCH,CONFIG_BOARD,count);
+		k_sleep(1000);
+	}
 }
