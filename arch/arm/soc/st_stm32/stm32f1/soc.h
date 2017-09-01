@@ -48,6 +48,9 @@
 #include <stm32f1xx_ll_spi.h>
 #endif
 
+#include <stm32f1xx_hal_rcc.h>
+#include <stm32f1xx_hal_adc.h>
+
 #endif /* !_ASMLANGUAGE */
 
 #endif /* _STM32F1_SOC_H_ */
