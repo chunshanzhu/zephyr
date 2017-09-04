@@ -1,6 +1,6 @@
-# Kconfig - STM32 MINI A15 board configuration
+# Kconfig - STM32F103ZET6 NUCLEUS board configuration
 #
-# Copyright (c) 2016 Open-RnD Sp. z o.o.
+# Copyright (c) 2017 Chunshan Zhu
 #
 # SPDX-License-Identifier: Apache-2.0
 #
