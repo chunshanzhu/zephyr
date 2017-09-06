@@ -1,0 +1,13 @@
+# Kconfig - OLIMEX-STM32-E407 board configuration
+#
+# Copyright (c) 2017, Erwin Rol <erwin@erwinrol.com>
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+if BOARD_NUCLEUS_F407VE
+
+config BOARD
+	default nucleus_f407ve
+
+endif # BOARD_NUCLEUS_F407VE

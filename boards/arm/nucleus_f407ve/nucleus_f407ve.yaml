@@ -1,0 +1,7 @@
+identifier: nucleus_f407ve
+name: NUCLEUS_STM32F407VE
+type: mcu
+arch: arm
+toolchain:
+  - zephyr
+  - gccarmemb
